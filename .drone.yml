@@ -2,8 +2,8 @@ kind: pipeline
 type: docker
 name: default
 
-# clone:
-#   disable: true
+clone:
+  disable: true
 
 steps:
 - name: greeting
@@ -24,7 +24,7 @@ volumes:
 ---
 kind: pipeline
 type: ssh
-name: default
+name: default-ssh
 
 server:
   host:
