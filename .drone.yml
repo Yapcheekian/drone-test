@@ -15,7 +15,7 @@ steps:
   - cat test.txt
   - echo hello > /var/git_local/test.txt
   - echo world >> /var/git_local/test.txt
-  - sleep 10
+  - sleep 5
 
 volumes:
 - name: cache
@@ -41,4 +41,7 @@ server:
 steps:
 - name: greeting
   commands:
-  - echo 'hello world' > test.txt
+  - echo 'hello world' > /home/ec2-user/test.txt
+
+depends_on:
+  - default
