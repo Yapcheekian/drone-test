@@ -9,6 +9,7 @@ steps:
   - name: cache
     path: /var/git_local
   commands:
+  - ls
   - echo hello > /var/git_local/test.txt
   - echo world >> /var/git_local/test.txt
 
