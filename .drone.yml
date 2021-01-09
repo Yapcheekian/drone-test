@@ -2,8 +2,8 @@ kind: pipeline
 type: docker
 name: default
 
-clone:
-  disable: true
+# clone:
+#   disable: true
 
 steps:
 - name: greeting
@@ -20,3 +20,21 @@ volumes:
 - name: cache
   host:
     path: /tmp/cache
+
+---
+kind: pipeline
+type: ssh
+name: default
+
+server:
+  host:
+    from_secret: host
+  user:
+    from_secret: username
+  ssh_key:
+    from_secret: ssh_key
+
+steps:
+- name: greeting
+  commands:
+  - echo 'hello world'
