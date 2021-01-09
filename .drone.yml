@@ -26,6 +26,9 @@ kind: pipeline
 type: ssh
 name: default-ssh
 
+clone:
+  disable: true
+
 server:
   host:
     from_secret: host
