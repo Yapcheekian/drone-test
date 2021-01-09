@@ -41,7 +41,7 @@ server:
 steps:
 - name: greeting
   commands:
-  - echo 'hello world' > /home/ec2-user/test.txt
+  - aws eks list-clusters
 
 depends_on:
   - default
