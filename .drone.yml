@@ -40,6 +40,7 @@ volumes:
 
 kind: pipeline
 type: docker
+name: ecr
 steps:
 - name: publish
   image: plugins/ecr
