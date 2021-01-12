@@ -49,6 +49,7 @@ steps:
       from_secret: access_key
     secret_key:
       from_secret: secret_key
+    region: ap-northeast-1
     repo: staging
     registry: 427794181662.dkr.ecr.ap-northeast-1.amazonaws.com
     tags:
