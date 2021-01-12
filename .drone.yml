@@ -23,21 +23,28 @@ volumes:
     path: /tmp/cache
 
 ---
-# kind: pipeline
-# type: ssh
-# name: default-ssh
 
-# clone:
-#   disable: true
+kind: pipeline
+type: ssh
+name: default-ssh
 
-# server:
-#   host:
-#     from_secret: host
-#   user:
-#     from_secret: username
-#   ssh_key:
-#     from_secret: ssh_key
+clone:
+  disable: true
 
+server:
+  host:
+    from_secret: host
+  user:
+    from_secret: username
+  ssh_key:
+    from_secret: ssh_key
+
+steps:
+- name: ssh
+  commands:
+  - echo ${DRONE_COMMIT} > /home/ec2-user/test.txt
+
+---
 kind: pipeline
 type: docker
 name: ecr
