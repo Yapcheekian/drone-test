@@ -23,25 +23,33 @@ volumes:
     path: /tmp/cache
 
 ---
+# kind: pipeline
+# type: ssh
+# name: default-ssh
+
+# clone:
+#   disable: true
+
+# server:
+#   host:
+#     from_secret: host
+#   user:
+#     from_secret: username
+#   ssh_key:
+#     from_secret: ssh_key
+
 kind: pipeline
-type: ssh
-name: default-ssh
-
-clone:
-  disable: true
-
-server:
-  host:
-    from_secret: host
-  user:
-    from_secret: username
-  ssh_key:
-    from_secret: ssh_key
-
+type: docker
 steps:
-- name: greeting
-  commands:
-  - aws eks list-clusters
-
-depends_on:
-  - default
+- name: publish
+  image: plugins/ecr
+  settings:
+    access_key:
+      from_secret: access_key
+    secret_key:
+      from_secret: secret_key
+    repo: staging
+    registry: 427794181662.dkr.ecr.ap-northeast-1.amazonaws.com
+    tags:
+    - latest
+    - ${DRONE_COMMIT}
