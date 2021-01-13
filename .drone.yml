@@ -22,6 +22,10 @@ volumes:
   host:
     path: /tmp/cache
 
+trigger:
+  branch:
+  - staging
+
 ---
 kind: pipeline
 type: docker
@@ -40,6 +44,10 @@ steps:
     tags:
     - latest
     - ${DRONE_COMMIT}
+
+trigger:
+  branch:
+  - staging
 
 depends_on:
   - default
@@ -66,6 +74,10 @@ steps:
   - KUBECONFIG=/home/ec2-user/.kube/config
   - REPO=427794181662.dkr.ecr.ap-northeast-1.amazonaws.com/ruby
   - kubectl --kubeconfig $KUBECONFIG set image deploy ruby ruby=$REPO:${DRONE_COMMIT}
+
+trigger:
+  branch:
+  - staging
 
 depends_on:
   - ecr
