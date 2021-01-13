@@ -23,6 +23,26 @@ volumes:
     path: /tmp/cache
 
 ---
+kind: pipeline
+type: docker
+name: ecr
+steps:
+- name: publish
+  image: plugins/ecr
+  settings:
+    access_key:
+      from_secret: access_key
+    secret_key:
+      from_secret: secret_key
+    region: ap-northeast-1
+    repo: ruby
+    registry: 427794181662.dkr.ecr.ap-northeast-1.amazonaws.com
+    tags:
+    - latest
+    - ${DRONE_COMMIT}
+depends_on:
+  - default
+---
 
 kind: pipeline
 type: ssh
@@ -46,24 +66,4 @@ steps:
   - REPO=427794181662.dkr.ecr.ap-northeast-1.amazonaws.com/ruby
   - kubectl --kubeconfig $KUBECONFIG set image deploy ruby ruby=$REPO:${DRONE_COMMIT}
 depends_on:
-  - default
----
-kind: pipeline
-type: docker
-name: ecr
-steps:
-- name: publish
-  image: plugins/ecr
-  settings:
-    access_key:
-      from_secret: access_key
-    secret_key:
-      from_secret: secret_key
-    region: ap-northeast-1
-    repo: ruby
-    registry: 427794181662.dkr.ecr.ap-northeast-1.amazonaws.com
-    tags:
-    - latest
-    - ${DRONE_COMMIT}
-depends_on:
-  - default
+  - ecr
