@@ -46,9 +46,6 @@ steps:
   - REPO=427794181662.dkr.ecr.ap-northeast-1.amazonaws.com/ruby
   - kubectl --kubeconfig $KUBECONFIG set image deploy ruby ruby=$REPO:${DRONE_COMMIT}
 
-depends_on:
-  - ecr
-
 ---
 kind: pipeline
 type: docker
@@ -67,3 +64,5 @@ steps:
     tags:
     - latest
     - ${DRONE_COMMIT}
+depends_on:
+  - default
