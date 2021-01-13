@@ -42,8 +42,7 @@ server:
 steps:
 - name: ssh
   commands:
-  - echo ${DRONE_COMMIT} > /home/ec2-user/test.txt
-  - echo "hi" >> /home/ec2-user/test.txt
+  - kubectl set image deploy ruby ruby=ruby:${DRONE_COMMIT}
 
 ---
 kind: pipeline
