@@ -26,6 +26,9 @@ trigger:
   branch:
   - staging
 
+node:
+  env: staging
+
 ---
 kind: pipeline
 type: docker
@@ -48,6 +51,9 @@ steps:
 trigger:
   branch:
   - staging
+
+node:
+  env: staging
 
 depends_on:
   - default
@@ -78,6 +84,9 @@ steps:
 trigger:
   branch:
   - staging
+
+node:
+  env: staging
 
 depends_on:
   - ecr
