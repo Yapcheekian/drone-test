@@ -42,8 +42,9 @@ server:
 steps:
 - name: ssh
   commands:
-  - echo $(pwd) > /home/ec2-user/test.txt
-  - kubectl --kubeconfig /home/ec2-user/.kube/config set image deploy ruby ruby=ruby:${DRONE_COMMIT}
+  - KUBECONFIG=/home/ec2-user/.kube/config
+  - REPO=427794181662.dkr.ecr.ap-northeast-1.amazonaws.com/ruby
+  - kubectl --kubeconfig ${KUBECONFIG} set image deploy ruby ruby=REPO:${DRONE_COMMIT}
 
 ---
 kind: pipeline
