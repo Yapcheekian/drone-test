@@ -23,8 +23,8 @@ trigger:
   branch:
   - staging
 
-node:
-  env: staging
+# node:
+#   env: staging
 
 ---
 kind: pipeline
@@ -49,8 +49,8 @@ trigger:
   branch:
   - staging
 
-node:
-  env: staging
+# node:
+#   env: staging
 ---
 
 kind: pipeline
