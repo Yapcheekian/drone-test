@@ -80,7 +80,7 @@ trigger:
   - staging
 
 node:
-  env: staging
+  env: stagingsss
 
 depends_on:
   - ecr
