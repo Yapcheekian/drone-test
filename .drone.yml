@@ -1,5 +1,5 @@
 kind: pipeline
-# type: docker
+type: docker
 name: default
 
 steps:
@@ -28,7 +28,7 @@ trigger:
 
 ---
 kind: pipeline
-# type: docker
+type: docker
 name: ecr
 steps:
 - name: publish
