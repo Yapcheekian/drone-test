@@ -2,9 +2,6 @@ kind: pipeline
 type: docker
 name: default
 
-# clone:
-#   disable: true
-
 steps:
 - name: greeting
   image: alpine
@@ -26,8 +23,8 @@ trigger:
   branch:
   - staging
 
-node:
-  env: staging
+# node:
+#   env: staging
 
 ---
 kind: pipeline
@@ -52,11 +49,8 @@ trigger:
   branch:
   - staging
 
-node:
-  env: staging
-
-depends_on:
-  - default
+# node:
+#   env: staging
 ---
 
 kind: pipeline
