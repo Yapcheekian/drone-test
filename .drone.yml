@@ -79,8 +79,8 @@ trigger:
   branch:
   - staging
 
-# node:
-#   env: staging
+node:
+  env: staging
 
 depends_on:
   - ecr
