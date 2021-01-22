@@ -9,8 +9,8 @@ steps:
 - name: check
   image: sinlead/drone-fast-git:0.2.0-rc
   commands:
-    - git fetch origin staging
-    - git diff --exit-code origin/staging...$DRONE_COMMIT_SHA
+    # - git fetch origin staging
+    # - git diff --exit-code origin/staging...$DRONE_COMMIT_SHA
     - sleep 1000000000
 
 volumes:
