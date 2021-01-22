@@ -3,16 +3,12 @@ kind: pipeline
 name: default
 
 steps:
-- name: greeting
-  image: alpine
-  volumes:
-  - name: cache
-    path: /var/git_local
+- name: check
+  image: sinlead/drone-fast-git:0.2.0-rc
   commands:
-  - cat test.txt
-  - echo hello > /var/git_local/test.txt
-  - echo world >> /var/git_local/test.txt
-  - sleep 5
+    - git fetch origin staging
+    - git diff --exit-code origin/staging...$DRONE_COMMIT_SHA
+    - sleep 1000000000
 
 volumes:
 - name: cache
@@ -23,64 +19,64 @@ trigger:
   branch:
   - staging
 
-node:
-  env: staging
+# node:
+#   env: staging
 
----
-kind: pipeline
+# ---
+# kind: pipeline
 # type: docker
-name: ecr
-steps:
-- name: publish
-  image: plugins/ecr
-  settings:
-    access_key:
-      from_secret: access_key
-    secret_key:
-      from_secret: secret_key
-    region: ap-northeast-1
-    repo: ruby
-    registry: 427794181662.dkr.ecr.ap-northeast-1.amazonaws.com
-    tags:
-    - latest
-    - ${DRONE_COMMIT}
+# name: ecr
+# steps:
+# - name: publish
+#   image: plugins/ecr
+#   settings:
+#     access_key:
+#       from_secret: access_key
+#     secret_key:
+#       from_secret: secret_key
+#     region: ap-northeast-1
+#     repo: ruby
+#     registry: 427794181662.dkr.ecr.ap-northeast-1.amazonaws.com
+#     tags:
+#     - latest
+#     - ${DRONE_COMMIT}
 
-trigger:
-  branch:
-  - staging
+# trigger:
+#   branch:
+#   - staging
 
-node:
-  env: staging
----
+# node:
+#   env: staging
+# ---
 
-kind: pipeline
-type: ssh
-name: default-ssh
+# kind: pipeline
+# type: ssh
+# name: default-ssh
 
-clone:
-  disable: true
+# clone:
+#   disable: true
 
-server:
-  host:
-    from_secret: host
-  user:
-    from_secret: username
-  ssh_key:
-    from_secret: ssh_key
+# server:
+#   host:
+#     from_secret: host
+#   user:
+#     from_secret: username
+#   ssh_key:
+#     from_secret: ssh_key
 
-steps:
-- name: ssh
-  commands:
-  - KUBECONFIG=/home/ec2-user/.kube/config
-  - REPO=427794181662.dkr.ecr.ap-northeast-1.amazonaws.com/ruby
-  - kubectl --kubeconfig $KUBECONFIG set image deploy ruby ruby=$REPO:${DRONE_COMMIT}
+# steps:
+# - name: ssh
+#   commands:
+#   - KUBECONFIG=/home/ec2-user/.kube/config
+#   - REPO=427794181662.dkr.ecr.ap-northeast-1.amazonaws.com/ruby
+#   - kubectl --kubeconfig $KUBECONFIG set image deploy ruby ruby=$REPO:${DRONE_COMMIT}
 
-trigger:
-  branch:
-  - staging
+# trigger:
+#   branch:
+#   - staging
 
-node:
-  env: staging
+# node:
+#   env: staging
 
-depends_on:
-  - ecr
+# depends_on:
+#   - ecr
