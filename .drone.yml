@@ -2,6 +2,9 @@ kind: pipeline
 # type: docker
 name: default
 
+clone:
+  disable: true
+
 steps:
 - name: check
   image: sinlead/drone-fast-git:0.2.0-rc
